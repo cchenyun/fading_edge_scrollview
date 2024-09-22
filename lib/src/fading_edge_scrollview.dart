@@ -1,11 +1,5 @@
 import 'package:flutter/material.dart';
 
-typedef ScrollParameters = ({
-  ScrollController controller,
-  Axis direction,
-  bool reverse
-});
-
 /// Flutter widget for displaying fading edge at start/end of scroll views
 class FadingEdgeScrollView extends StatefulWidget {
   /// child widget
@@ -49,6 +43,13 @@ class FadingEdgeScrollView extends StatefulWidget {
   })  : assert(gradientFractionOnStart >= 0 && gradientFractionOnStart <= 1),
         assert(gradientFractionOnEnd >= 0 && gradientFractionOnEnd <= 1);
 
+  /// Unified constructor for FadingEdgeScrollView
+  ///
+  /// [parametersIfChildTypeUnknown] has to be provided if child does not extend
+  /// ScrollView, SingleChildScrollView, AnimatedList, PageView or ListWheelScrollView
+  /// otherwise it is ignored
+  ///
+  /// child must have [controller] set
   factory FadingEdgeScrollView({
     Key? key,
     required Widget child,
@@ -391,3 +392,9 @@ enum _ScrollState {
       this == _ScrollState.scrollableAtStart ||
       this == _ScrollState.scrollableInTheMiddle;
 }
+
+typedef ScrollParameters = ({
+  ScrollController controller,
+  Axis direction,
+  bool reverse
+});

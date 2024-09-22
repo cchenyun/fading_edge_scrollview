@@ -113,11 +113,13 @@ class _ListViewScreenState extends State<ListViewScreen> {
           child: ListView.builder(
             controller: _controller,
             itemBuilder: (context, index) => ListTile(
-                title: Text('Item #$index'),
-                leading: const CircleAvatar(
-                  backgroundImage: NetworkImage(
-                      'https://images.freeimages.com/images/large-previews/848/a-cat-1313470.jpg'),
-                )),
+              title: Text('Item #$index'),
+              leading: const CircleAvatar(
+                backgroundImage: NetworkImage(
+                  'https://images.freeimages.com/images/large-previews/848/a-cat-1313470.jpg',
+                ),
+              ),
+            ),
             itemCount: 30,
           ),
         ),
@@ -201,7 +203,9 @@ class _LongTextScreenState extends State<LongTextScreen> {
         child: SingleChildScrollView(
           controller: _controller,
           child: const Padding(
-              padding: EdgeInsets.all(5), child: Text(lipsumText)),
+            padding: EdgeInsets.all(5),
+            child: Text(lipsumText),
+          ),
         ),
       ),
     );
@@ -256,13 +260,15 @@ class _CitiesListViewState extends State<CitiesListView> {
                       'moscow',
                       'tokyo',
                     ]
-                        .map((city) => Padding(
-                              padding: const EdgeInsets.all(12),
-                              child: ClipRRect(
-                                borderRadius: BorderRadius.circular(20.0),
-                                child: Image.asset('assets/$city.jpeg'),
-                              ),
-                            ))
+                        .map(
+                          (city) => Padding(
+                            padding: const EdgeInsets.all(12),
+                            child: ClipRRect(
+                              borderRadius: BorderRadius.circular(20.0),
+                              child: Image.asset('assets/$city.jpeg'),
+                            ),
+                          ),
+                        )
                         .toList(),
                   ),
                 ),
@@ -309,11 +315,13 @@ class _ListWheelScrollViewScreenState extends State<ListWheelScrollViewScreen> {
             controller: _controller,
             children: lipsumText.split(' ').sublist(0, 20).map((e) {
               return ListTile(
-                  title: Text('Item #$e'),
-                  leading: const CircleAvatar(
-                    backgroundImage: NetworkImage(
-                        'https://images.freeimages.com/images/large-previews/848/a-cat-1313470.jpg'),
-                  ));
+                title: Text('Item #$e'),
+                leading: const CircleAvatar(
+                  backgroundImage: NetworkImage(
+                    'https://images.freeimages.com/images/large-previews/848/a-cat-1313470.jpg',
+                  ),
+                ),
+              );
             }).toList(),
           ),
         ),

@@ -4,17 +4,25 @@ Package providing FadingEdgeScrollView which allows you to build scrollable view
 
 ## Usage
 
-Create FadingEdgeScrollView by calling one of constructors depending on your scroll view class.
-Unfortunately scrollable view don't share same interface so there are separate constructors for:
-* ScrollView (most scrollable views inherit from this class) `FadingEdgeScrollView.fromScrollView`
-* SingleChildScrollView `FadingEdgeScrollView.fromSingleChildScrollView`
-* PageView `FadingEdgeScrollView.fromPageView`
-* AnimatedList `FadingEdgeScrollView.fromAnimatedList`
-* ListWheelScrollView `FadingEdgeScrollView.fromListWheelScrollView`
+Create scrollable view with fading edges by wrapping yout widget in `FadingEdgeScrollView`
+
+```dart
+FadingEdgeScrollView(
+  child: yourWidget,
+)
+```
+
+additional constructor parameters are:
+* `gradientFractionOnStart` and `gradientFractionOnEnd` - double values from 0 to 1, telling how big fade should be on start and end parts of child widget. Default values are 0.1
+* `parametersIfChildTypeUnknown` should be set if child does not extend ScrollView, SingleChildScrollView, AnimatedList, PageView or ListWheelScrollView. Otherwise, it is ignored
 
 View passed as child **MUST** have `controller` set. 
 
 See documentation and example folder for more information
+
+## Migration to version 5
+
+Change all calls to `FadingEdgeScrollView.fromSomeWidget` to `FadingEdgeScrollView`
 
 ## Breaking change in version 4.0.0
 

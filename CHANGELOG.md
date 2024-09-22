@@ -1,3 +1,7 @@
+## [5.0.0] - XX.XX.2025
+
+* Added unified constructor. Marked old constructors as deprecated
+
 ## [4.1.1] - 25.02.2024
 
 * Updated example to set controller to PageView
