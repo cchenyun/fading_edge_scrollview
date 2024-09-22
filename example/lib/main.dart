@@ -55,7 +55,7 @@ class ExamplesList extends StatelessWidget {
             builder: (_) => const CitiesListView(),
           ),
           NavigatorButton(
-            text: "ListWheelScrollView",
+            text: 'ListWheelScrollView',
             builder: (_) => const ListWheelScrollViewScreen(),
           ),
         ],
@@ -109,7 +109,7 @@ class _ListViewScreenState extends State<ListViewScreen> {
       ),
       body: Container(
         color: Colors.greenAccent,
-        child: FadingEdgeScrollView.fromScrollView(
+        child: FadingEdgeScrollView(
           child: ListView.builder(
             controller: _controller,
             itemBuilder: (context, index) => ListTile(
@@ -139,7 +139,6 @@ class PageViewScreen extends StatefulWidget {
 }
 
 class _PageViewScreenState extends State<PageViewScreen> {
-
   final _controller = PageController();
 
   @override
@@ -158,7 +157,7 @@ class _PageViewScreenState extends State<PageViewScreen> {
         textDirection: widget.textDirection,
         child: Padding(
           padding: const EdgeInsets.all(12.0),
-          child: FadingEdgeScrollView.fromPageView(
+          child: FadingEdgeScrollView(
             gradientFractionOnStart: 0.1,
             gradientFractionOnEnd: 0.1,
             child: PageView(
@@ -198,7 +197,7 @@ class _LongTextScreenState extends State<LongTextScreen> {
       appBar: AppBar(
         title: const Text('Example with long text'),
       ),
-      body: FadingEdgeScrollView.fromSingleChildScrollView(
+      body: FadingEdgeScrollView(
         child: SingleChildScrollView(
           controller: _controller,
           child: const Padding(
@@ -248,7 +247,7 @@ class _CitiesListViewState extends State<CitiesListView> {
                 bottom: 100,
                 left: 20,
                 right: 20,
-                child: FadingEdgeScrollView.fromScrollView(
+                child: FadingEdgeScrollView(
                   child: ListView(
                     controller: _controller,
                     children: [
@@ -297,23 +296,23 @@ class _ListWheelScrollViewScreenState extends State<ListWheelScrollViewScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Example with ListWheelScrollView"),
+        title: const Text('Example with ListWheelScrollView'),
       ),
       body: Container(
         color: Colors.greenAccent,
-        child: FadingEdgeScrollView.fromListWheelScrollView(
+        child: FadingEdgeScrollView(
           gradientFractionOnStart: 0.3,
           gradientFractionOnEnd: 0.3,
           child: ListWheelScrollView(
             itemExtent: 60,
             perspective: 0.0001,
             controller: _controller,
-            children: lipsumText.split(" ").sublist(0, 20).map((e) {
+            children: lipsumText.split(' ').sublist(0, 20).map((e) {
               return ListTile(
-                  title: Text("Item #$e"),
+                  title: Text('Item #$e'),
                   leading: const CircleAvatar(
                     backgroundImage: NetworkImage(
-                        "https://images.freeimages.com/images/large-previews/848/a-cat-1313470.jpg"),
+                        'https://images.freeimages.com/images/large-previews/848/a-cat-1313470.jpg'),
                   ));
             }).toList(),
           ),

@@ -1,5 +1,11 @@
 import 'package:flutter/material.dart';
 
+typedef ScrollParameters = ({
+  ScrollController controller,
+  Axis direction,
+  bool reverse
+});
+
 /// Flutter widget for displaying fading edge at start/end of scroll views
 class FadingEdgeScrollView extends StatefulWidget {
   /// child widget
@@ -43,8 +49,83 @@ class FadingEdgeScrollView extends StatefulWidget {
   })  : assert(gradientFractionOnStart >= 0 && gradientFractionOnStart <= 1),
         assert(gradientFractionOnEnd >= 0 && gradientFractionOnEnd <= 1);
 
+  factory FadingEdgeScrollView({
+    Key? key,
+    required Widget child,
+    double gradientFractionOnStart = 0.1,
+    double gradientFractionOnEnd = 0.1,
+    ScrollParameters? parametersIfChildTypeUnknown,
+  }) {
+    final (controller, direction, reverse) =
+        switch ((child, parametersIfChildTypeUnknown)) {
+      (
+        ScrollView(
+          controller: final controller,
+          scrollDirection: final scrollDirection,
+          reverse: final reverse
+        ),
+        _
+      ) ||
+      (
+        SingleChildScrollView(
+          controller: final controller,
+          scrollDirection: final scrollDirection,
+          reverse: final reverse
+        ),
+        _
+      ) ||
+      (
+        AnimatedList(
+          controller: final controller,
+          scrollDirection: final scrollDirection,
+          reverse: final reverse
+        ),
+        _
+      ) =>
+        (controller, scrollDirection, reverse),
+      (
+        PageView(
+          controller: final controller,
+          scrollDirection: final scrollDirection,
+          reverse: final reverse
+        ),
+        _
+      ) =>
+        (controller, scrollDirection, reverse),
+      (
+        ListWheelScrollView(
+          controller: final controller,
+        ),
+        _
+      ) =>
+        (controller, Axis.vertical, false),
+      (_, final parameters) when parameters != null => (
+          parameters.controller,
+          parameters.direction,
+          parameters.reverse
+        ),
+      _ => throw Exception(
+          'Child type is not recognized. Please set [parametersIfChildTypeUnknown] parameter'),
+    };
+
+    if (controller == null) {
+      throw Exception('Child must have controller set');
+    }
+
+    return FadingEdgeScrollView._internal(
+      key: key,
+      scrollController: controller,
+      scrollDirection: direction,
+      reverse: reverse,
+      gradientFractionOnStart: gradientFractionOnStart,
+      gradientFractionOnEnd: gradientFractionOnEnd,
+      child: child,
+    );
+  }
+
   /// Constructor for creating [FadingEdgeScrollView] with [ScrollView] as child
   /// child must have [ScrollView.controller] set
+  @Deprecated('Use [FadingEdgeScrollView] constructor instead')
   factory FadingEdgeScrollView.fromScrollView({
     Key? key,
     required ScrollView child,
@@ -53,7 +134,7 @@ class FadingEdgeScrollView extends StatefulWidget {
   }) {
     final controller = child.controller;
     if (controller == null) {
-      throw Exception("Child must have controller set");
+      throw Exception('Child must have controller set');
     }
 
     return FadingEdgeScrollView._internal(
@@ -69,6 +150,7 @@ class FadingEdgeScrollView extends StatefulWidget {
 
   /// Constructor for creating [FadingEdgeScrollView] with [SingleChildScrollView] as child
   /// child must have [SingleChildScrollView.controller] set
+  @Deprecated('Use [FadingEdgeScrollView] constructor instead')
   factory FadingEdgeScrollView.fromSingleChildScrollView({
     Key? key,
     required SingleChildScrollView child,
@@ -77,7 +159,7 @@ class FadingEdgeScrollView extends StatefulWidget {
   }) {
     final controller = child.controller;
     if (controller == null) {
-      throw Exception("Child must have controller set");
+      throw Exception('Child must have controller set');
     }
 
     return FadingEdgeScrollView._internal(
@@ -93,6 +175,7 @@ class FadingEdgeScrollView extends StatefulWidget {
 
   /// Constructor for creating [FadingEdgeScrollView] with [PageView] as child
   /// child must have [PageView.controller] set
+  @Deprecated('Use [FadingEdgeScrollView] constructor instead')
   factory FadingEdgeScrollView.fromPageView({
     Key? key,
     required PageView child,
@@ -102,7 +185,7 @@ class FadingEdgeScrollView extends StatefulWidget {
     final controller = child.controller;
     //ignore: unnecessary_null_comparison
     if (controller == null) {
-      throw Exception("Child must have controller set");
+      throw Exception('Child must have controller set');
     }
 
     return FadingEdgeScrollView._internal(
@@ -118,6 +201,7 @@ class FadingEdgeScrollView extends StatefulWidget {
 
   /// Constructor for creating [FadingEdgeScrollView] with [AnimatedList] as child
   /// child must have [AnimatedList.controller] set
+  @Deprecated('Use [FadingEdgeScrollView] constructor instead')
   factory FadingEdgeScrollView.fromAnimatedList({
     Key? key,
     required AnimatedList child,
@@ -126,7 +210,7 @@ class FadingEdgeScrollView extends StatefulWidget {
   }) {
     final controller = child.controller;
     if (controller == null) {
-      throw Exception("Child must have controller set");
+      throw Exception('Child must have controller set');
     }
 
     return FadingEdgeScrollView._internal(
@@ -141,7 +225,8 @@ class FadingEdgeScrollView extends StatefulWidget {
   }
 
   /// Constructor for creating [FadingEdgeScrollView] with [ScrollView] as child
-  /// child must have [ScrollView.controller] set
+  /// child must have [ListWheelScrollView.controller] set
+  @Deprecated('Use [FadingEdgeScrollView] constructor instead')
   factory FadingEdgeScrollView.fromListWheelScrollView({
     Key? key,
     required ListWheelScrollView child,
@@ -150,7 +235,7 @@ class FadingEdgeScrollView extends StatefulWidget {
   }) {
     final controller = child.controller;
     if (controller == null) {
-      throw Exception("Child must have controller set");
+      throw Exception('Child must have controller set');
     }
 
     return FadingEdgeScrollView._internal(
